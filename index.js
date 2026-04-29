@@ -485,5 +485,5 @@ app.listen(port, () => {
   console.log(`✅ Server listening on port ${port}`);
 });
 
-// --- Export for Vercel deployment ---
+// --- Export for Vercel deployment ----
 module.exports = app;
