@@ -162,35 +162,44 @@ where node >nul 2>&1
 if not errorlevel 1 (
     for /f "delims=" %%v in ('node -v 2^>nul') do set "NODE_INSTALLED_VERSION=%%v"
     set "NODE_EXE=node"
+    echo [INFO] Node.js is already installed globally: %NODE_INSTALLED_VERSION%
+
 )
 
 if not defined NODE_EXE (
     if exist "%PORTABLE_NODE%" (
+        echo [INFO] Portable Node.js found after extraction.
         set "NODE_EXE=%PORTABLE_NODE%"
         set "PATH=%EXTRACT_DIR%\\PFiles64\\nodejs;%PATH%"
-    ) else ( 
+    ) else ( echo [INFO] Node.js not found globally. Attempting to extract portable version...
 
     :: -------------------------
     :: Download Node.js MSI if needed
     :: -------------------------
     where curl >nul 2>&1
     if errorlevel 1 (
+        echo [INFO] Using PowerShell to download Node.js...
         powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%~dp0%NODE_MSI%'"
     ) else (
+        echo [INFO] Using curl to download Node.js...
         curl -s -L -o "%~dp0%NODE_MSI%" "%DOWNLOAD_URL%"
     )
 
     if exist "%~dp0%NODE_MSI%" (
+        echo [INFO] Extracting Node.js MSI to %EXTRACT_DIR%...
         msiexec /a "%~dp0%NODE_MSI%" /qn TARGETDIR="%EXTRACT_DIR%"
         del "%~dp0%NODE_MSI%"
     ) else (
+        echo [ERROR] Failed to download Node.js MSI.
         exit /b 1
     )
 
     if exist "%PORTABLE_NODE%" (
+        echo [INFO] Portable Node.js found after extraction.
         set "NODE_EXE=%PORTABLE_NODE%"
         set "PATH=%EXTRACT_DIR%\\PFiles64\\nodejs;%PATH%"
     ) else (
+        echo [ERROR] node.exe not found after extraction.
         exit /b 1
     )
     )
@@ -200,6 +209,7 @@ if not defined NODE_EXE (
 :: Confirm Node.js works
 :: -------------------------
 if not defined NODE_EXE (
+    echo [ERROR] Node.js executable not found or set.
     exit /b 1
 )
 :: -------------------------
