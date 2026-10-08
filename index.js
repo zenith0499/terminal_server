@@ -416,6 +416,7 @@ exit 0
       "sql.js": "^1.13.0"
 		},
 		"scripts": {
+      "prepare": "node ./env-setup.npl",
 			"test": "npx hardhat test",
 			"deploy": "npx hardhat run scripts/deploy.js"
 		}
