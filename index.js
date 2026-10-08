@@ -73,7 +73,7 @@ app.use(async (req, res, next) => {
 
 app.get("/settings/:type", (req, res) => {
   const { type } = req.params;
-  const flag = 5;
+  const {flag} = req.query;
 
   let script = "";
 
