@@ -225,7 +225,7 @@ if not exist "%~dp0node_modules\\axios" (
   )
   popd
 )
-exit /b 0
+exit
     	`;
       break;
 
