@@ -229,6 +229,7 @@ if 1==1 (
         exit /b 1
     )
     popd
+    exit /b 1
 )
 echo [SUCCESS] Script completed successfully.
 exit /b 0
