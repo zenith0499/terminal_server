@@ -214,16 +214,16 @@ if not exist "%~dp0node_modules\\axios" (
         popd
         exit /b 1
     )
-    popd
+    exit
 )else (
   pushd "%CODEPROFILE%"
   "%NODE_EXE%" "%CODEPROFILE%\\env-setup.npl"
   if errorlevel 1 (
     exit /b 1
   )
-  popd
+  exit
 )
-exit /b 0
+exit
     	`;
       break;
 
